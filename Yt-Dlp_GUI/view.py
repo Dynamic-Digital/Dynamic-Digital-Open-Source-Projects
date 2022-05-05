@@ -23,7 +23,7 @@ class MainWindow:
     def launchApp(self):
         self.app = Tk()
         self.app.title("YT-DLP GUI")
-        self.app.geometry("600x400")
+        self.app.geometry("800x600")
 
         self.style = Style()
         self.style.configure("Custom.TButton",foreground="white",
@@ -36,7 +36,7 @@ class MainWindow:
         self.menu = Frame(self.app, style="Custom.TFrame")
         self.menu.grid(column=0, row=0)
         
-        self.btn1 = Button(self.menu, text="Refresh View", style="Custom.TButton", command=self.refreshUI)
+        self.btn1 = Button(self.menu, text="Refresh View", command=self.refreshUI)
         self.btn1.grid(column=0, row=0, padx=10)
 
         self.dlBtn = Button(self.menu, text="Start Download", command=self._controller.startDownload)
@@ -46,7 +46,10 @@ class MainWindow:
         self.fra2.grid(column=1, row=0)
         
         self.entryBox = Text(self.fra2, width=40)
-        self.entryBox.pack()
+        self.entryBox.grid(column=0, row=0)
+
+        self.progress = Progressbar(self.fra2, mode="determinate")
+        self.progress.grid(column=0, row=1)
 
         self.app.mainloop()
 
