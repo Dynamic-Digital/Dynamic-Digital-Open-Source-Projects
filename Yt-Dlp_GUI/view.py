@@ -48,7 +48,7 @@ class MainWindow:
         self.entryBox = Text(self.fra2, width=40)
         self.entryBox.grid(column=0, row=0)
 
-        self.progress = Progressbar(self.fra2, mode="determinate")
+        self.progress = Progressbar(self.fra2, mode="determinate", length=1000)
         self.progress.grid(column=0, row=1)
 
         self.app.mainloop()

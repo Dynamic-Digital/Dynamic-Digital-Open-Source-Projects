@@ -1,5 +1,4 @@
 import yt_dlp
-import progressbar
 from yt_dlp.utils import DateRange
 
 URLS = ['https://www.youtube.com/watch?v=VbjURh01yXo']
