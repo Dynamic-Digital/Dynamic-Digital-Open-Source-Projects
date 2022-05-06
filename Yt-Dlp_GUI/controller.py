@@ -1,6 +1,12 @@
+from bleach import clean
 from view import *
 from brain import *
+import yt_dlp
 import threading
+import json
+import requests as webrequests
+import os
+import googleapiclient.discovery
 
 class Controller:
     def __init__(self, view, model) -> None:
@@ -20,9 +26,40 @@ class Controller:
         if self._view.progress["value"] < d["total_bytes"]:
             self._view.progress["value"] = d["downloaded_bytes"]
             self._view.app.update_idletasks()
-        
 
-    def download(self):
+    def youtubeAPI(self):
+        #TODO Remove in Production
+        os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+
+        api_service_name = "youtube"
+        api_version = "v3"
+        DEVELOPER_KEY = "ENTER_API_KEY_HERE"
+
+        self.text: str = self._view.entryBox.get("1.0", "end-1c")
+        self.urlList = self.text.splitlines()
+
+        youtube = googleapiclient.discovery.build(
+            api_service_name, api_version, developerKey = DEVELOPER_KEY)
+
+        for url in self.urlList:
+            # Gets the info from youtubedlp in an unserialisable format
+            dirtyInfo = yt_dlp.YoutubeDL().extract_info(url, download=False)
+
+            # converts info to serialisable dictionary
+            cleanInfo = yt_dlp.YoutubeDL().sanitize_info(dirtyInfo)
+
+            request = youtube.videos().list(
+                part="snippet,contentDetails,statistics",
+                id=cleanInfo["id"]
+            )
+            response = request.execute()
+            self.setView(response)
+
+    def setView(self, response):
+        self._view.videoTitleText.set(response["items"][0]["snippet"]["title"])
+        self._view.videoDescriptionText.set(response["items"][0]["snippet"]["description"])   
+
+    def download(self, url):
         self.text: str = self._view.entryBox.get("1.0", "end-1c")
         self.urlList = self.text.splitlines()
         ydl_opts = {
@@ -33,7 +70,7 @@ class Controller:
             'outtmpl': '%(uploader)s/%(title)s.%(ext)s',
             
         }
-        self._model.downloader(ydl_opts, self.urlList)
+        self._model.downloader(ydl_opts, url)
     
     def startDownload(self):
         dlThread = threading.Thread(target=self.download)
