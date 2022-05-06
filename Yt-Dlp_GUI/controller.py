@@ -13,7 +13,7 @@ class Controller:
         self._view: MainWindow = view
         self._model: Brain = model
         self._view.register(self)
-        print("Created Controller")
+        # print("Created Controller")
         self._view.launchApp()
 
     def my_hook(self, d):
@@ -33,7 +33,7 @@ class Controller:
 
         api_service_name = "youtube"
         api_version = "v3"
-        DEVELOPER_KEY = "ENTER_API_KEY_HERE"
+        DEVELOPER_KEY = ""
 
         self.text: str = self._view.entryBox.get("1.0", "end-1c")
         self.urlList = self.text.splitlines()
@@ -54,6 +54,7 @@ class Controller:
             )
             response = request.execute()
             self.setView(response)
+            self.download(url)
 
     def setView(self, response):
         self._view.videoTitleText.set(response["items"][0]["snippet"]["title"])

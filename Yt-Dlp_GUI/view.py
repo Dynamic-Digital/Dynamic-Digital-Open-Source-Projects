@@ -6,19 +6,19 @@ class MainWindow:
     def __init__(self) -> None:
         self._controller = None
         self.app = None
-        print("Created view")
+        # print("Created view")
     
     def register(self, controller):
         self._controller = controller
-        if self._controller != None:
-            print("Controller registered")
-        else:
-            print("Controller not registered")
+        # if self._controller != None:
+        #    # print("Controller registered")
+        # else:
+        #     print("Controller not registered")
 
     def refreshUI(self):
         self.app.destroy()
         self.launchApp()
-        print("Hello World")
+        # print("Hello World")
 
     def launchApp(self):
 
