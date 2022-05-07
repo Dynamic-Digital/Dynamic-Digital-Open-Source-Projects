@@ -8,13 +8,40 @@ import requests as webrequests
 import os
 import googleapiclient.discovery
 
+class MyLogger:
+    def __init__(self) -> None:
+        self._controller = None
+    
+    def register(self, controller):
+        self._controller: Controller = controller
+
+    def debug(self, msg):
+        # For compatibility with youtube-dl, both debug and info are passed into debug
+        # You can distinguish them by the prefix '[debug] '
+        if msg.startswith('[debug] '):
+            self._controller._view.debugLogVar.set(msg)
+        else:
+            self._controller._view.debugLogVar.set(msg)
+
+    def info(self, msg):
+        self._controller._view.debugLogVar.set(msg)
+
+    def warning(self, msg):
+        self._controller._view.debugLogVar.set(msg)
+
+    def error(self, msg):
+        self._controller._view.debugLogVar.set(msg)
+
 class Controller:
-    def __init__(self, view, model) -> None:
+    def __init__(self, view, model, logger) -> None:
         self._view: MainWindow = view
         self._model: Brain = model
+        self._logger: MyLogger = logger
         self._view.register(self)
+        self._logger.register(self)
         # print("Created Controller")
         self._view.launchApp()
+        self._fileDir = ""
 
     def my_hook(self, d):
         """
@@ -66,9 +93,10 @@ class Controller:
         ydl_opts = {
             'download_archive': "./downloaded.txt",
             # 'daterange': DateRange('20220422', '20220426'),
+            'logger': self._logger,
             'format': 'mp4/best',
             'progress_hooks': [self.my_hook],
-            'outtmpl': '%(uploader)s/%(title)s.%(ext)s',
+            'outtmpl': self._fileDir + '/%(uploader)s/%(title)s.%(ext)s',
             
         }
         self._model.downloader(ydl_opts, url)
@@ -81,4 +109,5 @@ class Controller:
 if __name__ == "__main__":
     view = MainWindow()
     model = Brain()
-    controller = Controller(view, model)
+    logger = MyLogger()
+    controller = Controller(view, model, logger)

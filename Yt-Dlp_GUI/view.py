@@ -1,6 +1,7 @@
 from cProfile import label
 from tkinter import *
 from tkinter.ttk import *
+from tkinter import filedialog
 
 class MainWindow:
     def __init__(self) -> None:
@@ -19,6 +20,10 @@ class MainWindow:
         self.app.destroy()
         self.launchApp()
         # print("Hello World")
+    
+    def chooseDir(self):
+        self._controller._fileDir = filedialog.askdirectory(title="Choose Download Directory")
+        print(self._controller._fileDir)
 
     def launchApp(self):
 
@@ -48,6 +53,9 @@ class MainWindow:
         self.dlBtn = Button(self.menu, text="Start Download", command=self._controller.youtubeAPI, width=15)
         self.dlBtn.grid(column=0, row=1, padx=10)
 
+        self.choosedlDir = Button(self.menu, text="Choose Download Dir", command=self.chooseDir)
+        self.choosedlDir.grid(column=0, row=2)
+
         # URL input Panel
 
         self.fra2 = Frame(self.app)
@@ -58,6 +66,11 @@ class MainWindow:
 
         self.progress = Progressbar(self.fra2, mode="determinate", length=300)
         self.progress.grid(column=0, row=1)
+
+        self.debugLogVar = StringVar()
+        self.debugLogVar.set("Debug Area")
+        self.debugLog = Label(self.fra2, textvariable=self.debugLogVar)
+        self.debugLog.grid(column=0, row=2)
 
         # Video Info Panel
 
