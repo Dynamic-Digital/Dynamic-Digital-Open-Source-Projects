@@ -1,7 +1,8 @@
-from cProfile import label
+from pathlib import Path
 from tkinter import *
 from tkinter.ttk import *
 from tkinter import filedialog
+import os
 
 class MainWindow:
     def __init__(self) -> None:
@@ -22,7 +23,7 @@ class MainWindow:
         # print("Hello World")
     
     def chooseDir(self):
-        self._controller._fileDir = filedialog.askdirectory(title="Choose Download Directory")
+        self._controller._fileDir = filedialog.askdirectory(title="Choose Download Directory", initialdir=Path.home())
         print(self._controller._fileDir)
 
     def launchApp(self):
@@ -31,7 +32,7 @@ class MainWindow:
 
         self.app = Tk()
         self.app.title("YT-DLP GUI")
-        self.app.geometry("800x600")
+        self.app.geometry("1000x600")
 
         # Tkinter Styles
 
@@ -73,13 +74,12 @@ class MainWindow:
         self.debugLog.grid(column=0, row=2)
 
         # Video Info Panel
-
         self.videoInfoContain = Frame(self.app, height=70)
-        self.videoInfoContain.grid(column=2, row=0, sticky="n")
-        
+        self.videoInfoContain.grid(column=2, row=0, sticky="N")
+
         self.videoTitleText = StringVar()
         self.videoTitleText.set("Video Title")
-        self.videoTitle = Label(self.videoInfoContain, textvariable=self.videoTitleText, font=("Arial", 15))
+        self.videoTitle = Label(self.videoInfoContain, textvariable=self.videoTitleText, font=("Arial", 15), wraplength=500)
         self.videoTitle.grid(column=0, row=0, padx=60, pady=20)
         
         self.videoDescriptionText = StringVar()

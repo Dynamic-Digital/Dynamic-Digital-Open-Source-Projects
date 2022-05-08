@@ -1,12 +1,8 @@
-from bleach import clean
 from view import *
 from brain import *
 import yt_dlp
 import threading
-import json
-import requests as webrequests
 import os
-import googleapiclient.discovery
 
 class MyLogger:
     def __init__(self) -> None:
@@ -41,7 +37,7 @@ class Controller:
         self._logger.register(self)
         # print("Created Controller")
         self._view.launchApp()
-        self._fileDir = ""
+        self._fileDir = " "
 
     def my_hook(self, d):
         """
@@ -55,18 +51,9 @@ class Controller:
             self._view.app.update_idletasks()
 
     def youtubeAPI(self):
-        #TODO Remove in Production
-        os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-
-        api_service_name = "youtube"
-        api_version = "v3"
-        DEVELOPER_KEY = ""
 
         self.text: str = self._view.entryBox.get("1.0", "end-1c")
         self.urlList = self.text.splitlines()
-
-        youtube = googleapiclient.discovery.build(
-            api_service_name, api_version, developerKey = DEVELOPER_KEY)
 
         for url in self.urlList:
             # Gets the info from youtubedlp in an unserialisable format
@@ -75,23 +62,19 @@ class Controller:
             # converts info to serialisable dictionary
             cleanInfo = yt_dlp.YoutubeDL().sanitize_info(dirtyInfo)
 
-            request = youtube.videos().list(
-                part="snippet,contentDetails,statistics",
-                id=cleanInfo["id"]
-            )
-            response = request.execute()
-            self.setView(response)
+            #call setview
+            self.setView(cleanInfo)
             self.download(url)
 
     def setView(self, response):
-        self._view.videoTitleText.set(response["items"][0]["snippet"]["title"])
-        self._view.videoDescriptionText.set(response["items"][0]["snippet"]["description"])   
+        self._view.videoTitleText.set(response["title"])
+        self._view.videoDescriptionText.set(response["description"])   
 
     def download(self, url):
         self.text: str = self._view.entryBox.get("1.0", "end-1c")
         self.urlList = self.text.splitlines()
         ydl_opts = {
-            'download_archive': "./downloaded.txt",
+            'download_archive': self._fileDir + "/downloaded.txt",
             # 'daterange': DateRange('20220422', '20220426'),
             'logger': self._logger,
             'format': 'mp4/best',
