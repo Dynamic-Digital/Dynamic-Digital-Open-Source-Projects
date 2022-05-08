@@ -44,5 +44,5 @@ coll = COLLECT(exe,
                name='YT-DLP GUI')
 app = BUNDLE(coll,
              name='YT-DLP GUI.app',
-             icon=None,
+             icon="./icons/yt-dlp-gui.icns",
              bundle_identifier=None)
