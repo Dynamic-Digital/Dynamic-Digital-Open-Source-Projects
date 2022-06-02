@@ -12,5 +12,9 @@ class Brain():
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download(urls)
     
+    def getInfo(self, url) -> str:
+        info = yt_dlp.YoutubeDL().sanitize_info(yt_dlp.YoutubeDL().extract_info(url, download=False))
+        print(info)
+    
     
 

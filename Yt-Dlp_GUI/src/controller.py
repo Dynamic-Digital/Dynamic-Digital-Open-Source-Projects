@@ -1,4 +1,4 @@
-from view import *
+from viewTkinter import *
 from brain import *
 import yt_dlp
 import threading
