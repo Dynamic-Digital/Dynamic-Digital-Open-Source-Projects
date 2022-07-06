@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Yt_DLP GUI</title>
+        <link href="/static/css/main.css" rel="stylesheet" />
+        <link href="/static/css/navigation.css" rel="stylesheet" />
+        <script src="/static/js/home.js"></script>
+    </head>
+    <body>
+        <div class="grid-controller">
+            <div class="header">
+                <ul class="menu">
+                    <!-- Floated Left -->
+                    <li style="font-size: xx-large;"><a href="/">Youtube Downloader</a></li>
+                    <!-- floated right -->
+                    <li class="floatRight"><a>Settings</a></li>
+                    <li class="floatRight"><a>Home</a></li>                    
+                </ul>
+            </div>
+        </div>
+
+        <div id="grid-view">          
+            <form style="display: grid; grid-template-columns: 400px auto">
+                <h3>URL Inputs - Only Enter one url per line</h3>
+                <div></div>
+                <textarea id="URLInput" style="width: 377px; height: 218px; resize: none;"></textarea>
+                <div style="width: 100px; vertical-align: top">
+                    <input  type="button" value="Start Download" style="vertical-align:top; margin-left:10px; height: 30px" onclick="server.startDownload()">
+                    <input type="button" value="Get Information" onclick="server.getInformation()" style="vertical-align:top; margin-left:10px; height: 30px; margin-top: 10px">
+                </div>
+            </form>
+            <div></div>
+            <div id="VideoInfo" style="display: grid; column-span: 2; background-color: grey;">
+                <div id="buttonGrid" style="grid-column-start: 1; grid-column-end: 3; height: 40px;"></div>
+                <h1 id="videoTitle" style="padding: 20px;">Video Title</h1>
+                <h2 id="videoViews">Total Views: </h2>
+                <img style="width: 480px;" id="videoInfoThumbnail">
+                <p id="videoDescription"></p></div>
+            </div>
+
+    </body>
+</html>

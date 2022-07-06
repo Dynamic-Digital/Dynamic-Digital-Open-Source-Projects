@@ -1,0 +1,46 @@
+.grid-controller {
+    display: grid;
+}
+
+.header {
+    /* display: inline; */
+    background-color: white;
+    padding: 5px;
+}
+
+.menu li:hover {
+    background-color: rgb(207, 202, 202);
+}
+
+.menu li {
+    display: inline;
+    list-style-type: none;
+    padding: 10px;
+    font-size: 20px;
+    
+}
+
+a {
+    font-style: normal;
+    color: black;
+    text-decoration: none;
+}
+
+.floatRight {
+    float: right;
+}
+
+@media screen and (max-width: 600px) {
+    
+    .menu li {
+        display: block;
+        list-style-type: none;
+        padding: 10px;
+        
+    }
+
+    .floatRight {
+        float: none;
+    }
+
+}

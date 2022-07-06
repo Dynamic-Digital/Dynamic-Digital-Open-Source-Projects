@@ -1,0 +1,27 @@
+body {
+    background-color: white;
+}
+
+#grid-view {
+    padding-left: 10px;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.item2 {
+    width: 470px;
+}
+
+.floatRight {
+    float: right;
+}
+
+#VideoInfo {
+    grid-template-columns: auto auto;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+@media screen and (max-width: 600px) {
+    
+}
