@@ -9,6 +9,7 @@ class Brain():
         print("Created Model")
 
     def downloader(self, ydl_opts, urls):
+        print(urls)
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download(urls)
     

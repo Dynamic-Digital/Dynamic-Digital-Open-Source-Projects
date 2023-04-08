@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>Yt_DLP GUI</title>
         <link href="/static/css/main.css" rel="stylesheet" />
@@ -23,6 +23,7 @@
             <form style="display: grid; grid-template-columns: 400px auto">
                 <h3>URL Inputs - Only Enter one url per line</h3>
                 <div></div>
+                <progress id="downloadProgress" value="0" max="100"></progress>
                 <textarea id="URLInput" style="width: 377px; height: 218px; resize: none;"></textarea>
                 <div style="width: 100px; vertical-align: top">
                     <input  type="button" value="Start Download" style="vertical-align:top; margin-left:10px; height: 30px" onclick="server.startDownload()">
@@ -30,10 +31,10 @@
                 </div>
             </form>
             <div></div>
-            <div id="VideoInfo" style="display: grid; column-span: 2; background-color: grey;">
+            <div id="VideoInfo" style="display: grid; column-span: 2; margin-top: 10px;">
                 <div id="buttonGrid" style="grid-column-start: 1; grid-column-end: 3; height: 40px;"></div>
                 <h1 id="videoTitle" style="padding: 20px;">Video Title</h1>
-                <h2 id="videoViews">Total Views: </h2>
+                <h2 id="videoViews" style="padding: 20px;">Total Views: </h2>
                 <img style="width: 480px;" id="videoInfoThumbnail">
                 <p id="videoDescription"></p></div>
             </div>
